@@ -5,40 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pamor Snake</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Firebase App (the core Firebase SDK) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <!-- Firebase Auth -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
 <body>
     <h1>Pamor Snake - Python Simulator</h1>
     
-    <!-- Auth Form -->
-    <div id="auth-container">
-        <h2>Login</h2>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button id="login-btn">Login</button>
-        <button id="signup-btn">Sign Up</button>
-        <p id="auth-error" style="color: red;"></p>
+    <!-- Récupération de la clé -->
+    <div id="key-container">
+        <input type="text" id="recovery-key" placeholder="Enter Recovery Key" required>
+        <button id="load-code">Load Code</button>
+        <p id="key-error" style="color: red;"></p>
     </div>
 
     <!-- Code Editor -->
-    <textarea id="code-editor" placeholder="Write your Python code here..." style="display:none;"></textarea>
+    <textarea id="code-editor" placeholder="Write your Python code here..."></textarea>
 
     <!-- Buttons -->
-    <div class="buttons" style="display:none;">
-        <button id="run-code">Run Code</button>
+    <div class="buttons">
+        <button id="run-selected-code">Run Selected Code</button>
         <button id="save-code">Save Code</button>
-        <input type="file" id="load-code" style="display:none;">
-        <button id="open-code">Open Code</button>
-        <button id="load-cloud-code">Load Cloud Code</button>
     </div>
 
     <!-- Output Area -->
-    <pre id="output-area" style="display:none;"></pre>
+    <pre id="output-area"></pre>
 
     <!-- Pyodide script -->
     <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
