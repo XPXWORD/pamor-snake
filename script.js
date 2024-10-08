@@ -1,6 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
 let pyodide = null;
 
 // Configuration Firebase
@@ -14,8 +11,8 @@ const firebaseConfig = {
 };
 
 // Initialiser Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 // Charger Pyodide
 async function loadPyodideAndPackages() {
@@ -31,19 +28,19 @@ async function saveCodeToCloud(code) {
     console.log("Saving code with recovery key:", recoveryKey);
 
     try {
-        const keyDoc = doc(db, "code-saves", recoveryKey);
-        const keyExists = await getDoc(keyDoc);
+        const keyDoc = db.collection("code-saves").doc(recoveryKey);
+        const keyExists = await keyDoc.get();
 
-        if (keyExists.exists()) {
-            await updateDoc(keyDoc, {
+        if (keyExists.exists) {
+            await keyDoc.update({
                 code: code,
-                timestamp: serverTimestamp()
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
             console.log("Code updated in cloud");
         } else {
-            await setDoc(keyDoc, {
+            await keyDoc.set({
                 code: code,
-                timestamp: serverTimestamp()
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
             console.log("Code saved to cloud");
         }
@@ -60,10 +57,10 @@ async function loadCodeFromCloud() {
     console.log("Loading code with recovery key:", recoveryKey);
     
     try {
-        const docRef = doc(db, "code-saves", recoveryKey);
-        const docSnap = await getDoc(docRef);
+        const docRef = db.collection("code-saves").doc(recoveryKey);
+        const docSnap = await docRef.get();
 
-        if (docSnap.exists()) {
+        if (docSnap.exists) {
             document.getElementById('code-editor').value = docSnap.data().code;
             alert('Code chargé depuis le cloud!');
             console.log("Code loaded:", docSnap.data().code);
