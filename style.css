@@ -1,46 +1,45 @@
 body {
+    background: linear-gradient(to bottom right, #ff5722, #c62828);
+    color: white;
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
+    padding: 20px;
 }
 
 h1 {
-    color: #333;
+    text-align: center;
 }
 
-input {
-    margin: 5px;
-    padding: 10px;
-    width: 80%;
-    font-size: 16px;
+#controls {
+    margin-bottom: 20px;
 }
 
-textarea {
-    width: 80%;
-    height: 300px;
-    margin-top: 20px;
-    font-family: monospace;
-    font-size: 16px;
+#code-blocks {
+    margin-bottom: 20px;
 }
 
-.buttons {
-    margin-top: 20px;
+.code-block {
+    margin-bottom: 10px;
+}
+
+.code-editor {
+    width: 100%;
+    height: 100px;
 }
 
 button {
-    padding: 10px 20px;
-    margin: 5px;
-    font-size: 16px;
+    background-color: #ff4081;
+    border: none;
+    color: white;
+    padding: 10px;
     cursor: pointer;
 }
 
-pre {
-    background-color: #222;
-    color: #eee;
-    text-align: left;
-    width: 80%;
-    margin: 20px auto;
+button:hover {
+    background-color: #f50057;
+}
+
+#output-area {
+    background-color: #212121;
     padding: 10px;
-    height: 200px;
-    overflow-y: scroll;
+    border-radius: 5px;
 }
