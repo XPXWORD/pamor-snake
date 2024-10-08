@@ -11,7 +11,7 @@ const firebaseConfig = {
 };
 
 // Initialiser Firebase
-const app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Charger Pyodide
