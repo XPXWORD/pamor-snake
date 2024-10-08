@@ -2,67 +2,79 @@ let pyodide = null;
 
 async function loadPyodideAndPackages() {
     pyodide = await loadPyodide();
+    console.log("Pyodide loaded");
 }
 
 loadPyodideAndPackages();
 
-document.getElementById('add-code-block').addEventListener('click', () => {
-    const codeBlocksDiv = document.getElementById('code-blocks');
-    const newBlock = document.createElement('div');
-    newBlock.classList.add('code-block');
-    
-    newBlock.innerHTML = `
-        <textarea class="code-editor" placeholder="Write your Python code here..."></textarea>
-        <button class="run-button">Run Code</button>
-    `;
-    
-    codeBlocksDiv.appendChild(newBlock);
-    
-    const runButton = newBlock.querySelector('.run-button');
+document.getElementById('add-block').addEventListener('click', () => {
+    const block = document.createElement('div');
+    block.classList.add('block');
+
+    const textarea = document.createElement('textarea');
+    block.appendChild(textarea);
+
+    const runButton = document.createElement('button');
+    runButton.textContent = 'Exécuter le bloc';
     runButton.addEventListener('click', async () => {
-        const code = newBlock.querySelector('.code-editor').value;
+        const code = textarea.value;
+        console.log("Exécution du code:", code);
+        
         try {
             const output = await pyodide.runPythonAsync(code);
-            document.getElementById('output-area').textContent += `Output:\n${output}\n`;
+            document.getElementById('output-area').textContent += output + "\n";
+            console.log("Code exécuté avec succès");
         } catch (err) {
-            document.getElementById('output-area').textContent += `Error:\n${err}\n`;
+            document.getElementById('output-area').textContent += `Erreur: ${err}\n`;
+            console.error('Erreur lors de l\'exécution du code:', err);
         }
     });
+    block.appendChild(runButton);
+    
+    document.getElementById('blocks-container').appendChild(block);
 });
 
 document.getElementById('save-code').addEventListener('click', () => {
-    const codeEditors = document.querySelectorAll('.code-editor');
-    const codeData = Array.from(codeEditors).map(editor => editor.value);
-    localStorage.setItem('savedCodeBlocks', JSON.stringify(codeData));
-    alert('Code saved locally!');
+    const blocks = document.querySelectorAll('.block textarea');
+    const codeArray = Array.from(blocks).map(block => block.value);
+    localStorage.setItem('savedCode', JSON.stringify(codeArray));
+    alert('Code sauvegardé localement!');
 });
 
 document.getElementById('load-code').addEventListener('click', () => {
-    const codeData = JSON.parse(localStorage.getItem('savedCodeBlocks'));
-    if (codeData) {
-        const codeBlocksDiv = document.getElementById('code-blocks');
-        codeBlocksDiv.innerHTML = '';
-        codeData.forEach(code => {
-            const newBlock = document.createElement('div');
-            newBlock.classList.add('code-block');
-            newBlock.innerHTML = `
-                <textarea class="code-editor" placeholder="Write your Python code here...">${code}</textarea>
-                <button class="run-button">Run Code</button>
-            `;
-            codeBlocksDiv.appendChild(newBlock);
-            
-            const runButton = newBlock.querySelector('.run-button');
+    const savedCode = JSON.parse(localStorage.getItem('savedCode'));
+    if (savedCode) {
+        const blocksContainer = document.getElementById('blocks-container');
+        blocksContainer.innerHTML = ''; // Effacer les anciens blocs
+        savedCode.forEach(code => {
+            const block = document.createElement('div');
+            block.classList.add('block');
+
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            block.appendChild(textarea);
+
+            const runButton = document.createElement('button');
+            runButton.textContent = 'Exécuter le bloc';
             runButton.addEventListener('click', async () => {
-                const code = newBlock.querySelector('.code-editor').value;
+                const code = textarea.value;
+                console.log("Exécution du code:", code);
+                
                 try {
                     const output = await pyodide.runPythonAsync(code);
-                    document.getElementById('output-area').textContent += `Output:\n${output}\n`;
+                    document.getElementById('output-area').textContent += output + "\n";
+                    console.log("Code exécuté avec succès");
                 } catch (err) {
-                    document.getElementById('output-area').textContent += `Error:\n${err}\n`;
+                    document.getElementById('output-area').textContent += `Erreur: ${err}\n`;
+                    console.error('Erreur lors de l\'exécution du code:', err);
                 }
             });
+            block.appendChild(runButton);
+            
+            blocksContainer.appendChild(block);
         });
+        alert('Code chargé!');
     } else {
-        alert('No saved code found!');
+        alert('Aucune sauvegarde trouvée!');
     }
 });
