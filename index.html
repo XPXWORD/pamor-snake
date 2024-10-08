@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pamor Snake</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>
-    <script src="script.js"></script>
 </head>
 <body>
-    <h1>Pamor Snake - Python Simulator</h1>
-    <div id="controls">
-        <input type="text" id="recovery-key" placeholder="Enter Recovery Key">
-        <button id="load-code">Load Code</button>
-        <button id="save-code">Save Code</button>
+    <h1>Pamor Snake - Simulateur Python</h1>
+    
+    <div id="blocks-container"></div>
+    
+    <div class="controls">
+        <button id="add-block">Ajouter un bloc de code</button>
+        <button id="save-code">Sauvegarder</button>
+        <button id="load-code">Charger</button>
     </div>
-    <div id="code-blocks">
-        <div class="code-block">
-            <textarea class="code-editor" placeholder="Write your Python code here..."></textarea>
-            <button class="run-button">Run Code</button>
-        </div>
-    </div>
-    <button id="add-code-block">Add Code Block</button>
+
     <pre id="output-area"></pre>
+    
+    <script src="script.js"></script>
 </body>
 </html>
