@@ -30,6 +30,8 @@ loadPyodideAndPackages();
 document.getElementById('login-btn').addEventListener('click', async () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    console.log("Tentative de connexion avec l'email : ", email); // Debug
+
     try {
         await auth.signInWithEmailAndPassword(email, password);
         alert('Connexion réussie !');
@@ -45,6 +47,8 @@ document.getElementById('login-btn').addEventListener('click', async () => {
 document.getElementById('signup-btn').addEventListener('click', async () => {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    console.log("Tentative d'inscription avec l'email : ", email); // Debug
+
     try {
         await auth.createUserWithEmailAndPassword(email, password);
         alert('Inscription réussie !');
